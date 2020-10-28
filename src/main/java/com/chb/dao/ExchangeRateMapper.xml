@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chb.dao.ExchangeRateMapper">
+    <insert id="addExchangeRate" parameterType="ExchangeRate">
+        insert into exchangerate(currency,name,data,status,type)
+        values (#{currency},#{name},#{data},#{status},#{type});
+    </insert>
+    <delete id="deleteExchangeRateById" parameterType="int">
+        delete from exchangerate
+        where id=#{id}
+    </delete>
+    <update id="updateExchangeRate" parameterType="ExchangeRate">
+        update exchangerate
+        set currency=#{currency},name=#{name},data=#{data},status=#{status},type=#{type}
+        where id=#{id};
+    </update>
+    <select id="queryExchangeRateById" resultType="ExchangeRate">
+        select * from exchangerate
+        where id=#{id}
+    </select>
+    <select id="queryAllBook" resultType="ExchangeRate">
+        select * from exchangerate
+    </select>
+</mapper>
