@@ -33,4 +33,9 @@ public class ExchangeRateServiceImpl implements  ExchangeRateService{
     public List<ExchangeRate> queryAllExchangeRate() {
         return exchangeRateMapper.queryAllExchangeRate();
     }
+
+    public List<ExchangeRate> queryExchangeRateByName(String name) {
+        return exchangeRateMapper.queryExchangeRateByName(name);
+    }
+
 }

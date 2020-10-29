@@ -20,7 +20,11 @@
         select * from exchangerate
         where id=#{id}
     </select>
-    <select id="queryAllBook" resultType="ExchangeRate">
+    <select id="queryAllExchangeRate" resultType="ExchangeRate">
         select * from exchangerate
+    </select>
+    <select id="queryExchangeRateByName" resultType="ExchangeRate">
+        select  * from exchangerate
+        where name like "%"#{name}"%"
     </select>
 </mapper>

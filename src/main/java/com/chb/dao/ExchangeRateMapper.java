@@ -16,4 +16,6 @@ public interface ExchangeRateMapper {
     ExchangeRate queryExchangeRateById(@Param("id") int id);
     //查询全部记录
     List<ExchangeRate> queryAllExchangeRate();
+    //根据名称查询记录
+    List<ExchangeRate> queryExchangeRateByName(String name);
 }
