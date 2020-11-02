@@ -17,50 +17,49 @@ public class ExchangeRateController {
     @Autowired
     @Qualifier("ExchangeRateServiceImpl")
     private ExchangeRateService exchangeRateService;
-
-    //查询全部记录，返回到展示页面
-    @RequestMapping("/allResults")
-    public String list(Model model){
-        List<ExchangeRate> list=exchangeRateService.queryAllExchangeRate();
-        model.addAttribute("list",list);
-        return "allResults";
-    }
-    @RequestMapping("/toAddPage")
-    public String toAddPage(){
-        return "addPage";
-    }
-
-    //添加汇利率的请求
+    //添加汇率
     @RequestMapping("/addER")
     public String addER(ExchangeRate er){
-        System.out.println("addBook=>"+er);
         exchangeRateService.addExchangeRate(er);
-        return "redirect:/exchangeRate/allResults";
+    return "redirect:/exchangeRate/queryER";
     }
-    //跳转到更新汇利率界面
-    @RequestMapping("/toUpdate")
-    public String toUpdatePage(int id,Model model){
-        ExchangeRate er=exchangeRateService.queryExchangeRateById(id);
-        model.addAttribute("Qer",er);
-        return "updatePage";
-    }
-    //修改汇利率
-    @RequestMapping("/updateER")
-    public String updateER(ExchangeRate er){
-        exchangeRateService.updateExchangeRate(er);
-        return "redirect:/exchangeRate/allResults";
-    }
-    //删除汇利率记录
+    //删除汇率
     @RequestMapping("/deleteER")
     public String deleteER(int id){
         exchangeRateService.deleteExchangeRateById(id);
-        return "redirect:/exchangeRate/allResults";
+        return "redirect:/exchangeRate/queryER";
     }
-    //根据Name查询结果
-    @RequestMapping("/queryByName")
-    public String queryByName(String name,Model model){
-        List<ExchangeRate> list=exchangeRateService.queryExchangeRateByName(name);
+    //更新汇率
+    @RequestMapping("/updateER")
+    public String updateER(ExchangeRate er){
+        exchangeRateService.updateExchangeRate(er);
+        return "redirect:/exchangeRate/queryER";
+    }
+    //利率类型为1，汇率为2 查汇率
+    @RequestMapping("/queryER")
+    public String queryER(Model model){
+        List<ExchangeRate> list=exchangeRateService.queryByType("2");
         model.addAttribute("list",list);
-        return "allResults";
+        return "/ER/edit";
     }
+    //到添加汇率页面  加汇率
+    @RequestMapping("/toAddERPage")
+    public String toAddERPage(){
+        return "/ER/add";
+    }
+    //到汇率更新界面
+    @RequestMapping("/toERUpdate")
+    public String toERUpdatePage(int id,Model model){
+        ExchangeRate er=exchangeRateService.queryExchangeRateById(id);
+        model.addAttribute("Qer",er);
+        return "/ER/update";
+    }
+    //查利率
+    @RequestMapping("/queryIR")
+    public String queryIR(Model model){
+        List<ExchangeRate> list=exchangeRateService.queryByType("1");
+        model.addAttribute("list",list);
+        return "/IR/edit";
+    }
+
 }

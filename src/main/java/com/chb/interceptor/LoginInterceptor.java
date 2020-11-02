@@ -20,8 +20,24 @@ public class LoginInterceptor implements HandlerInterceptor {
             System.out.println("拦截器：login通过");
             return true;
         }
-        if(session.getAttribute("userLoginInfo")!=null){
-            System.out.println("拦截器：userLoginInfo通过");
+        //利率编辑用户
+        if(session.getAttribute("IREdit")!=null){
+            System.out.println("拦截器：IREdit通过");
+            return true;
+        }
+        //利率审核用户
+        if(session.getAttribute("IRReview")!=null){
+            System.out.println("拦截器：IRReview通过");
+            return true;
+        }
+        //汇率编辑权限
+        if(session.getAttribute("EREdit")!=null){
+            System.out.println("拦截器：EREdit通过");
+            return true;
+        }
+        //汇率审核权限
+        if(session.getAttribute("ERReview")!=null){
+            System.out.println("拦截器：ERReview通过");
             return true;
         }
         //判断什么情况下没有登录

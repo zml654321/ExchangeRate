@@ -29,12 +29,6 @@
             </form>
         </div>
     </div>
-    <div class="col-lg-4 col-lg-offset-4">
-        <a href="${pageContext.request.contextPath}/exchangeRate/allResults">
-            <button class="btn btn-lg btn-primary" type="submit">Resign</button>
-        </a>
-    </div>
-</div> <!-- /container -->
-
+</div>
 </body>
 </html>

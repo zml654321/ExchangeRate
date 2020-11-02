@@ -18,4 +18,6 @@ public interface ExchangeRateMapper {
     List<ExchangeRate> queryAllExchangeRate();
     //根据名称查询记录
     List<ExchangeRate> queryExchangeRateByName(String name);
+    //查询利率记录
+    List<ExchangeRate> queryByType(String type);
 }

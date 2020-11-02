@@ -38,4 +38,8 @@ public class ExchangeRateServiceImpl implements  ExchangeRateService{
         return exchangeRateMapper.queryExchangeRateByName(name);
     }
 
+    public List<ExchangeRate> queryByType(String type) {
+        return exchangeRateMapper.queryByType(type);
+    }
+
 }

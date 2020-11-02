@@ -10,7 +10,7 @@
     <div class="col-md-12 column">
         <div class="page-header">
             <h1>
-                <small>新增汇利率</small>
+                <small>新增汇率</small>
             </h1>
         </div>
     </div>
@@ -28,16 +28,13 @@
             <label>数据：</label>
             <input type="text" name="data" value="${Qer.data}" class="form-control" required>
         </div>
+        <!--//hidden方式添加数据状态,1正常，2增，3改，4删-->
+            <input type="hidden" name="status" value="3" class="form-control" required>
+        <!--//hidden方式添加数据类型 1利,2汇-->
+            <input type="hidden" name="type" value="${Qer.type}" class="form-control" required>
+
         <div class="form-group">
-            <label>状态：</label>
-            <input type="text" name="status" value="${Qer.status}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label>类型：</label>
-            <input type="text" name="type" value="${Qer.type}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <input type="submit" class="form-control" value="添加">
+            <input type="submit" class="form-control" value="修改">
         </div>
     </form>
 </div>

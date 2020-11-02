@@ -27,4 +27,8 @@
         select  * from exchangerate
         where name like "%"#{name}"%"
     </select>
+    <select id="queryByType" resultType="ExchangeRate">
+        select  * from exchangerate
+        where type=#{type}
+    </select>
 </mapper>
