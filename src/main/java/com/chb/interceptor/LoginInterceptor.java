@@ -10,6 +10,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session=request.getSession();
         //放行：判断什么情况下登录
+        if(request.getRequestURI().contains("show")){
+            System.out.println("拦截器：show通过");
+            return true;
+        }
         //登录页面也会放行
         if(request.getRequestURI().contains("toLogin")){
             System.out.println("拦截器：toLogin通过");

@@ -31,4 +31,9 @@
         select  * from exchangerate
         where type=#{type}
     </select>
+    <update id="updateERStatusById" >
+        update exchangerate
+        set status=#{status}
+        where id=#{id}
+    </update>
 </mapper>

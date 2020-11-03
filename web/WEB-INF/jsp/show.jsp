@@ -1,9 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*" %>
 <html>
 <head>
-    <title>汇率审核</title>
+    <title>自动刷新实例</title>
     <script language="javascript" type="text/javascript">
         window.onload = function(){
             var oTable = document.getElementById("erTable");
@@ -12,14 +12,16 @@
             }
         }
     </script>
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<h2>自动刷新实</h2>
+<a href="${pageContext.request.contextPath}/showDetail">show</a>
+
 <div class="container">
     <div class="col-md-12 column">
         <div class="page-header">
             <h1>
-                <small>汇率审核</small>
+                <small>汇率录入</small>
             </h1>
         </div>
     </div>
@@ -27,7 +29,8 @@
     <div class="row">
         <div class="col-md-4 column">
             <!--新增书籍-->
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/exchangeRate/queryER?page=${"ER/review"}">查询全部汇率</a>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/exchangeRate/toAddERPage?page=${"ER/add"}">新增汇率</a>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/exchangeRate/queryER?page=${"/ER/edit"}">查询全部汇率</a>
         </div>
         <div class="col-md-6 column">
             <!--根据书籍名称搜索-->
@@ -40,7 +43,7 @@
         <div class="col-md-2 column">
             <p>
                 <a href="${pageContext.request.contextPath}/user/goOut">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true">${ERReview}</span>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true">${EREdit}</span>&nbsp;
                 </a>
             </p>
         </div>
@@ -92,7 +95,9 @@
                             </c:if>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/exchangeRate/ERReview?id=${ER.id}&status=${ER.status}&page=${"ER/review"}">放行</a>
+                            <a href="${pageContext.request.contextPath}/exchangeRate/toERUpdate?id=${ER.id}&page=${"ER/update"}">修改</a>
+                            &nbsp;|&nbsp;
+                            <a href="${pageContext.request.contextPath}/exchangeRate/updateER?id=${ER.id}&currency=${ER.currency}&name=${ER.name}&data=${ER.data}&status=${4}&type=${ER.type}&page=${"ER/edit"}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>

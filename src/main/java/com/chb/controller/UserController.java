@@ -20,7 +20,7 @@ public class UserController {
         //身份验证,密码正确true，错误false
         boolean IV = true;
         //权限验证，0没有权限，1利率编辑权限，2利率审核权限，3汇率编辑权限，4汇率审核权限
-        int AV = 3;
+        int AV = 4;
         if(IV){
             switch(AV)
             {   //没有权限，返回登录
@@ -32,26 +32,30 @@ public class UserController {
                     model.addAttribute("message","用户具有利率编辑权限");
                     session.setAttribute("IREdit",username);
                     model.addAttribute("IREdit",username);
-                    return "/IR/edit";
+                    model.addAttribute("page","/IR/edit");
+                    return "redirect:/exchangeRate/queryER";
                 }
                 //利率审核权限，加入session中，返回跳转页面
                 case 2: {
                     model.addAttribute("message","用户具有利率审核权限");
                     session.setAttribute("IRReview",username);
                     model.addAttribute("IRReview",username);
-                    return "/IR/review";}
+                    model.addAttribute("page","IR/review");
+                    return "redirect:/exchangeRate/queryER";}
                 //汇率编辑权限，加入session中，返回跳转页面
                 case 3: {
                     model.addAttribute("message","用户具有汇率编辑权限");
                     session.setAttribute("EREdit",username);
                     model.addAttribute("EREdit",username);
+                    model.addAttribute("page","/ER/edit");
                     return "redirect:/exchangeRate/queryER";}
                 //汇率审核权限，加入session中，返回跳转页面
                 case 4: {
                     model.addAttribute("message","用户具有汇率审核权限");
                     session.setAttribute("ERReview",username);
                     model.addAttribute("ERReview",username);
-                    return "/ER/review";}
+                    model.addAttribute("page","ER/review");
+                    return "redirect:/exchangeRate/queryER";}
             }
         }else {
             model.addAttribute("message","用户名或密码错误！");

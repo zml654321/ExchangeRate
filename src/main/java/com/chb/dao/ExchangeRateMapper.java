@@ -20,4 +20,6 @@ public interface ExchangeRateMapper {
     List<ExchangeRate> queryExchangeRateByName(String name);
     //查询利率记录
     List<ExchangeRate> queryByType(String type);
+    //更新汇率状态
+    int updateERStatusById(@Param("id")int id,@Param("status")String status);
 }
