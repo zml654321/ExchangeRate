@@ -22,4 +22,6 @@ public interface ExchangeRateMapper {
     List<ExchangeRate> queryByType(String type);
     //更新汇率状态
     int updateERStatusById(@Param("id")int id,@Param("status")String status);
+    //根据币种查询
+    List<ExchangeRate> queryByCurrency(@Param("status") String status,@Param("type") String type,@Param("currency") String currency);
 }

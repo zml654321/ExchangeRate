@@ -36,4 +36,11 @@
         set status=#{status}
         where id=#{id}
     </update>
+    <select id="queryByCurrency" resultType="ExchangeRate">
+        select *
+        from exchangerate
+        where status=#{status}
+        and type=#{type}
+        and currency=#{currency}
+    </select>
 </mapper>

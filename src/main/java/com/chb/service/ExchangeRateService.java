@@ -22,4 +22,6 @@ public interface ExchangeRateService {
     List<ExchangeRate> queryByType(String type);
     //更新汇率状态
     int updateERStatusById(int id,String status);
+    //根据币种查询
+    List<ExchangeRate> queryByCurrency(String status,String type,String currency);
 }

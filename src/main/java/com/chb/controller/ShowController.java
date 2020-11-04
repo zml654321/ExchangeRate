@@ -26,4 +26,11 @@ public class ShowController {
         model.addAttribute("list",list);
         return "show";
     }
+    @RequestMapping("/showUSD")
+    public String USD(Model model,String currency,String type){
+        List<ExchangeRate> list=exchangeRateService.queryByCurrency("1",type,currency);
+        model.addAttribute("currency",currency);
+        model.addAttribute("list",list);
+        return "show";
+    }
 }
