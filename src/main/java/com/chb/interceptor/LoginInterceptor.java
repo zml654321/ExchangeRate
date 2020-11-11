@@ -44,6 +44,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             System.out.println("拦截器：ERReview通过");
             return true;
         }
+        if(session.getAttribute("IT")!=null){
+            System.out.println("拦截器：IT通过");
+            return true;
+        }
         //判断什么情况下没有登录
         request.getRequestDispatcher("/WEB-INF/jsp/user/login.jsp").forward(request,response);
         return false;

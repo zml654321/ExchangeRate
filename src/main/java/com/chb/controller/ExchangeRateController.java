@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,17 +45,21 @@ public class ExchangeRateController {
             List<ExchangeRate> list=exchangeRateService.queryByType("2");
             model.addAttribute("list",list);
         }
+        if(page.contains("IT")){
+            List<ExchangeRate> list=exchangeRateService.queryAllExchangeRate();
+            model.addAttribute("list",list);
+        }
 
         return page;
     }
-    //到添加汇率页面  加汇率
+    //到添加汇利率页面
     @RequestMapping("/toAddERPage")
     public String toAddERPage(HttpServletRequest request,@RequestParam(value ="page",required = true)String page,Model model){
         System.out.println("page:"+page);
         model.addAttribute("page",page);
         return page;
     }
-    //到汇率更新界面
+    //到汇利率更新界面
     @RequestMapping("/toERUpdate")
     public String toERUpdatePage(int id,Model model,@RequestParam(value ="page",required = true)String page){
         ExchangeRate er=exchangeRateService.queryExchangeRateById(id);
@@ -65,20 +68,34 @@ public class ExchangeRateController {
     }
     //ER汇率放行
     @RequestMapping("/ERReview")
-    public String ERReview(int id,String status,@RequestParam(value ="page",required = true)String page,Model model){
+    public String ERReview(int id,@RequestParam(value ="page",required = true)String page,Model model){
         System.out.println("id:"+id);
-        System.out.println("status:"+status);
         model.addAttribute("page",page);
-        //根据status判断数据状态，2为新增，3为修改，二者做更新操作，4为删除，做删除操作
-      if(status.equals("4")){
-          //删除
-          exchangeRateService.deleteExchangeRateById(id);
-
-          return "redirect:/exchangeRate/queryER";
-      }else{
-          //更新状态
-            exchangeRateService.updateERStatusById(id,"1");
-      }
+      exchangeRateService.updateERDataById(id);
          return "redirect:/exchangeRate/queryER";
+    }
+    //根据type及name查询
+    @RequestMapping("/queryByName")
+    public String queryByNameAndType(HttpServletRequest request,@RequestParam(value ="page",required = true)String page,@RequestParam(value ="name",required = true)String name,Model model){
+        if(page.contains("IR")){
+            List<ExchangeRate> list=exchangeRateService.queryByName(name,"1");
+            model.addAttribute("list",list);
+        }
+        if(page.contains("ER")){
+            List<ExchangeRate> list=exchangeRateService.queryByName(name,"2");
+            model.addAttribute("list",list);
+        }
+        if(page.contains("IT")){
+            List<ExchangeRate> list=exchangeRateService.queryExchangeRateByName(name);
+            model.addAttribute("list",list);
+        }
+        return page;
+    }
+    //根据id删除数据
+    @RequestMapping("/deleteById")
+    public String deleteById(int id,@RequestParam(value ="page",required = true)String page,Model model){
+        model.addAttribute("page",page);
+        exchangeRateService.deleteExchangeRateById(id);
+        return "redirect:/exchangeRate/queryER";
     }
 }

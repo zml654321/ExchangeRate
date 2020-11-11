@@ -4,6 +4,9 @@
 <html>
 <head>
     <title>汇率审核</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script language="javascript" type="text/javascript">
         window.onload = function(){
             var oTable = document.getElementById("erTable");
@@ -11,8 +14,17 @@
                 oTable.rows[i].cells[0].innerHTML = (i);
             }
         }
+        function Submit(id,currency,name,data,data_memory) {
+            var res=confirm('确认放行?\r类型为：'+currency+
+                                    '\r名称为：'+name+
+                                    '\r放行前数据为:'+data+
+                                    '\r放行后数据为:'+data_memory);
+            var page='ER/review';
+            if(res){
+                window.location.href='/exchangeRate/ERReview?id='+id+'&page='+page;
+            }
+        }
     </script>
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -33,6 +45,7 @@
             <!--根据书籍名称搜索-->
             <form class="form-inline" action="${pageContext.request.contextPath}/exchangeRate/queryByName" method="post" style="float: right">
                 <span style="color: red;font-weight:bold">${error}</span>
+                <input type="hidden" name="page" value="ER/review">
                 <input type="text" name="name" class="form-control" placeholder="请输入查询关键字">
                 <input type="submit" value="查询" class="btn btn-primary">
             </form>
@@ -45,8 +58,6 @@
             </p>
         </div>
     </div>
-
-
     <div class="row clearfix">
         <div class="col-md-12 column">
             <table class="table table-hover table-striped" id="erTable">
@@ -56,6 +67,7 @@
                     <th>货币</th>
                     <th>名称</th>
                     <th>数据</th>
+                    <th>修改后数据</th>
                     <th>状态</th>
                     <th>类型</th>
                     <th>操作</th>
@@ -69,18 +81,19 @@
                         <td>${ER.currency}</td>
                         <td>${ER.name}</td>
                         <td>${ER.data}</td>
+                        <td>${ER.data_memory}</td>
                         <td>
                             <c:if test="${ER.status==1}">
-                                查询
+                                完成
                             </c:if>
                             <c:if test="${ER.status==2}">
-                                新增
+                                新增未放行
                             </c:if>
                             <c:if test="${ER.status==3}">
-                                修改
+                                修改未放行
                             </c:if>
                             <c:if test="${ER.status==4}">
-                                删除
+                                删除未放行
                             </c:if>
                         </td>
                         <td>
@@ -92,7 +105,9 @@
                             </c:if>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/exchangeRate/ERReview?id=${ER.id}&status=${ER.status}&page=${"ER/review"}">放行</a>
+                            <c:if test="${ER.data_memory!=null}">
+                            <button onclick="Submit('${ER.id}','${ER.currency}','${ER.name}','${ER.data}','${ER.data_memory}')" class="form-control">放行</button>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
@@ -101,8 +116,6 @@
         </div>
     </div>
 </div>
-
 </div>
-
 </body>
 </html>

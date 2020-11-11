@@ -13,7 +13,7 @@
     </delete>
     <update id="updateExchangeRate" parameterType="ExchangeRate">
         update exchangerate
-        set currency=#{currency},name=#{name},data=#{data},status=#{status},type=#{type}
+        set currency=#{currency},name=#{name},data=#{data},data_memory=#{data_memory},status=#{status},type=#{type}
         where id=#{id};
     </update>
     <select id="queryExchangeRateById" resultType="ExchangeRate">
@@ -39,8 +39,19 @@
     <select id="queryByCurrency" resultType="ExchangeRate">
         select *
         from exchangerate
-        where status=#{status}
+        where  data !=""
         and type=#{type}
         and currency=#{currency}
     </select>
+    <select id="queryByName" resultType="ExchangeRate">
+        select *
+        from exchangerate
+        where name like "%"#{name}"%"
+        and type=#{type}
+    </select>
+    <update id="updateERDataById">
+        update exchangerate
+        set data=data_memory,data_memory=null,status="1"
+        where id=#{id}
+    </update>
 </mapper>

@@ -16,19 +16,10 @@ public class ShowController {
     @Autowired
     @Qualifier("ExchangeRateServiceImpl")
     private ExchangeRateService exchangeRateService;
+    //根据提交请求返回不同的显示信息
     @RequestMapping("/show")
-    public String Show(){
-        return "show";
-    }
-    @RequestMapping("/showDetail")
-    public String ShowDetail(Model model){
-        List<ExchangeRate> list=exchangeRateService.queryAllExchangeRate();
-        model.addAttribute("list",list);
-        return "show";
-    }
-    @RequestMapping("/showUSD")
     public String USD(Model model,String currency,String type){
-        List<ExchangeRate> list=exchangeRateService.queryByCurrency("1",type,currency);
+        List<ExchangeRate> list=exchangeRateService.queryByCurrency(type,currency);
         model.addAttribute("currency",currency);
         model.addAttribute("list",list);
         return "show";

@@ -5,7 +5,7 @@
          version="4.0">
     <!--设置默认访问路径-->
     <welcome-file-list>
-        <welcome-file>show.jsp</welcome-file>
+        <welcome-file>/jsp/user/login.jsp</welcome-file>
     </welcome-file-list>
     <!--DispatchServlet-->
     <servlet>
@@ -34,4 +34,17 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!--错误页面-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/400.jsp</location>
+    </error-page>
 </web-app>

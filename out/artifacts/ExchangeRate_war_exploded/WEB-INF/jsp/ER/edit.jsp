@@ -27,13 +27,13 @@
     <div class="row">
         <div class="col-md-4 column">
             <!--新增书籍-->
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/exchangeRate/toAddERPage?page=${"ER/add"}">新增汇率</a>
             <a class="btn btn-primary" href="${pageContext.request.contextPath}/exchangeRate/queryER?page=${"/ER/edit"}">查询全部汇率</a>
         </div>
         <div class="col-md-6 column">
             <!--根据书籍名称搜索-->
             <form class="form-inline" action="${pageContext.request.contextPath}/exchangeRate/queryByName" method="post" style="float: right">
                 <span style="color: red;font-weight:bold">${error}</span>
+                <input type="hidden" name="page" value="ER/edit">
                 <input type="text" name="name" class="form-control" placeholder="请输入查询关键字">
                 <input type="submit" value="查询" class="btn btn-primary">
             </form>
@@ -46,8 +46,6 @@
             </p>
         </div>
     </div>
-
-
     <div class="row clearfix">
         <div class="col-md-12 column">
             <table class="table table-hover table-striped" id="erTable">
@@ -57,6 +55,7 @@
                     <th>货币</th>
                     <th>名称</th>
                     <th>数据</th>
+                    <th>修改后数据</th>
                     <th>状态</th>
                     <th>类型</th>
                     <th>操作</th>
@@ -70,18 +69,19 @@
                         <td>${ER.currency}</td>
                         <td>${ER.name}</td>
                         <td>${ER.data}</td>
+                        <td>${ER.data_memory}</td>
                         <td>
                             <c:if test="${ER.status==1}">
-                                查询
+                                完成
                             </c:if>
                             <c:if test="${ER.status==2}">
-                                新增
+                                新增未放行
                             </c:if>
                             <c:if test="${ER.status==3}">
-                                修改
+                                修改未放行
                             </c:if>
                             <c:if test="${ER.status==4}">
-                                删除
+                                删除未放行
                             </c:if>
                         </td>
                         <td>
@@ -94,8 +94,6 @@
                         </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/exchangeRate/toERUpdate?id=${ER.id}&page=${"ER/update"}">修改</a>
-                            &nbsp;|&nbsp;
-                            <a href="${pageContext.request.contextPath}/exchangeRate/updateER?id=${ER.id}&currency=${ER.currency}&name=${ER.name}&data=${ER.data}&status=${4}&type=${ER.type}&page=${"ER/edit"}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -104,7 +102,6 @@
         </div>
     </div>
 </div>
-
 </div>
 
 </body>

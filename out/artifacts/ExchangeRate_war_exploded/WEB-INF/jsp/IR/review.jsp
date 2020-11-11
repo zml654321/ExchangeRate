@@ -11,8 +11,20 @@
                 oTable.rows[i].cells[0].innerHTML = (i);
             }
         }
+        function Submit(id,currency,name,data,data_memory) {
+            var res=confirm('确认放行?\r类型为：'+currency+
+                '\r名称为：'+name+
+                '\r放行前数据为:'+data+
+                '\r放行后数据为:'+data_memory);
+            var page='IR/review';
+            if(res){
+                window.location.href='/exchangeRate/ERReview?id='+id+'&page='+page;
+            }
+        }
     </script>
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -33,6 +45,7 @@
             <!--根据书籍名称搜索-->
             <form class="form-inline" action="${pageContext.request.contextPath}/exchangeRate/queryByName" method="post" style="float: right">
                 <span style="color: red;font-weight:bold">${error}</span>
+                <input type="hidden" name="page" value="IR/review">
                 <input type="text" name="name" class="form-control" placeholder="请输入查询关键字">
                 <input type="submit" value="查询" class="btn btn-primary">
             </form>
@@ -56,6 +69,7 @@
                     <th>货币</th>
                     <th>名称</th>
                     <th>数据</th>
+                    <th>修改后数据</th>
                     <th>状态</th>
                     <th>类型</th>
                     <th>操作</th>
@@ -69,18 +83,19 @@
                         <td>${IR.currency}</td>
                         <td>${IR.name}</td>
                         <td>${IR.data}</td>
+                        <td>${IR.data_memory}</td>
                         <td>
                             <c:if test="${IR.status==1}">
-                                查询
+                                完成
                             </c:if>
                             <c:if test="${IR.status==2}">
-                                新增
+                                新增未放行
                             </c:if>
                             <c:if test="${IR.status==3}">
-                                修改
+                                修改未放行
                             </c:if>
                             <c:if test="${IR.status==4}">
-                                删除
+                                删除未放行
                             </c:if>
                         </td>
                         <td>
@@ -92,7 +107,9 @@
                             </c:if>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/exchangeRate/ERReview?id=${IR.id}&status=${IR.status}&page=${"IR/review"}">放行</a>
+                          <c:if test="${IR.data_memory!=null}">
+                              <button onclick="Submit('${IR.id}','${IR.currency}','${IR.name}','${IR.data}','${IR.data_memory}')" class="form-control">放行</button>
+                          </c:if>
                         </td>
                     </tr>
                 </c:forEach>

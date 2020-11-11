@@ -1,9 +1,14 @@
 package com.chb.controller;
 
+import com.chb.tools.ADLogin;
+import com.chb.tools.constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
+import java.util.zip.Adler32;
 
 @Controller
 @RequestMapping("/user")
@@ -13,15 +18,33 @@ public class UserController {
         return "/user/login";
     }
     @RequestMapping("/login")
-    public String login(HttpSession session, String username, String password, Model model){
-        //把用户的信息存在session中
-        //session.setAttribute("userLoginInfo",username);
-        //model.addAttribute("userLoginInfo",username);
+    public String login(HttpSession session, String username, String password, Model model) throws NamingException {
         //身份验证,密码正确true，错误false
-        boolean IV = true;
-        //权限验证，0没有权限，1利率编辑权限，2利率审核权限，3汇率编辑权限，4汇率审核权限
-        int AV = 4;
+        boolean IV =ADLogin.IV(username,password);
         if(IV){
+            //权限验证，0没有权限，1利率编辑权限，2利率审核权限，3汇率编辑权限，4汇率审核权限
+            int AV = 0;
+            //判断登录用户具有哪一权限
+            //利率录入权限
+            if(ADLogin.AV(username, constant.GROUP_IR_EDIT)){
+                AV=1;
+            }
+            //利率审核权限
+            if(ADLogin.AV(username, constant.GROUP_IR_REVIEW)){
+                AV=2;
+            }
+            //汇率录入权限
+            if(ADLogin.AV(username, constant.GROUP_ER_EDIT)){
+                AV=3;
+            }
+            //汇率审核权限
+            if(ADLogin.AV(username, constant.GROUP_ER_REVIEW)){
+                AV=4;
+            }
+            //IT权限
+            if(ADLogin.AV(username,constant.GROUP_IT)){
+                AV=5;
+            }
             switch(AV)
             {   //没有权限，返回登录
                 case 0: {
@@ -56,6 +79,13 @@ public class UserController {
                     model.addAttribute("ERReview",username);
                     model.addAttribute("page","ER/review");
                     return "redirect:/exchangeRate/queryER";}
+                case 5:{
+                    model.addAttribute("message","用户具有IT权限");
+                    session.setAttribute("IT",username);
+                    model.addAttribute("IT",username);
+                    model.addAttribute("page","IT/edit");
+                    return "redirect:/exchangeRate/queryER";
+                }
             }
         }else {
             model.addAttribute("message","用户名或密码错误！");

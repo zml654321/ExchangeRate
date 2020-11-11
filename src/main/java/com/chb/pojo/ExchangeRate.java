@@ -14,4 +14,5 @@ public class ExchangeRate {
     private String data;
     private String status;
     private String type;
+    private String data_memory;
 }

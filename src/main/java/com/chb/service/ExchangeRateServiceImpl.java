@@ -45,7 +45,19 @@ public class ExchangeRateServiceImpl implements  ExchangeRateService{
         return exchangeRateMapper.updateERStatusById(id,status);
     }
 
-    public List<ExchangeRate> queryByCurrency(String status, String type, String currency) {
-        return exchangeRateMapper.queryByCurrency(status,type,currency);
+
+
+    public List<ExchangeRate> queryByCurrency(String type, String currency) {
+        return exchangeRateMapper.queryByCurrency(type,currency);
+    }
+
+    @Override
+    public List<ExchangeRate> queryByName(String name, String type) {
+        return exchangeRateMapper.queryByName(name,type);
+    }
+
+    @Override
+    public int updateERDataById(int id) {
+        return exchangeRateMapper.updateERDataById(id);
     }
 }
