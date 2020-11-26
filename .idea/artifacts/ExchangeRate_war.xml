@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="ExchangeRate:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/ExchangeRate_war</output-path>
+    <root id="archive" name="ExchangeRate_war.war">
+      <element id="artifact" artifact-name="ExchangeRate:war exploded" />
+    </root>
+  </artifact>
+</component>

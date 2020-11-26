@@ -5,10 +5,8 @@ import com.chb.tools.constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
-import java.util.zip.Adler32;
 
 @Controller
 @RequestMapping("/user")
@@ -94,8 +92,8 @@ public class UserController {
         return "/user/login";
     }
     @RequestMapping("/goOut")
-    public String goOut(HttpSession session){
-        session.removeAttribute("userLoginInfo");
+    public String goOut(HttpSession session,String name){
+        session.removeAttribute(name);
         return "/user/login";
     }
 }

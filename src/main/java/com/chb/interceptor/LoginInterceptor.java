@@ -9,6 +9,10 @@ import javax.servlet.http.HttpSession;
 public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session=request.getSession();
+        if(request.getRequestURI().contains("bootstrap")){
+            System.out.println("拦截器：bootstrap通过");
+            return true;
+        }
         //放行：判断什么情况下登录
         if(request.getRequestURI().contains("show")){
             System.out.println("拦截器：show通过");
